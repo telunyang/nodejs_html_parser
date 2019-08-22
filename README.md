@@ -10,6 +10,7 @@ This repository is to teach students who register my information classes on how 
 
 ## Prerequisites
 你需要一些下面所列出的實驗經驗:
+
 You need to have some practical experiences as follows:
 1. Javascript: Node.js programming language
 2. jQuery: manipulate html elements
@@ -21,6 +22,7 @@ You need to have some practical experiences as follows:
    - MySql and SQL syntax
 
 安裝 Node.js 套件 (與 package.json 檔案有關)
+
 Install node.js packages (It's related to package.json)
 ```sh
 $ npm i --save
