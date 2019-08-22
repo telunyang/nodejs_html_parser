@@ -4,7 +4,7 @@ Using nightmareJS or selenium driver to crawl data from websites.
 使用 nightmareJS selenium driver 來爬取網站資料。
 
 ## Description
-This repository is to teach students who register my information classes on how to crawl and retrieve text/hyperlink/binary data from websites. In our cases, they can help us to crawl some websites as 104 Human Resource bank, Instagram, LINE stickers, Wikipedia page of roles list for Romance of Three Kingdoms, WineSearcher and YouTube, etc.
+This repository is to teach students who register my information classes on how to crawl and retrieve text/hyperlink/binary data from websites. In our cases, they can help us to crawl some websites such as 104 Human Resource bank, Instagram, LINE stickers, Wikipedia page of roles list for Romance of Three Kingdoms, WineSearcher and YouTube, etc.
 
 此專案用於指導報名資訊課程的學生如何爬取網站資料。在我們的案例中，它們能協助我們爬下一些網站，例如 104 人力銀行、Instagram、LINE 貼圖、維基百科「三國演義人物列表」、WineSearcher 酒類詢價網站和 YouTube 等。
 
