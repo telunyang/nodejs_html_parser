@@ -8,6 +8,22 @@ This repository is to teach students who register my information classes on how 
 
 此專案用於指導報名資訊課程的學生如何爬取網站資料。在我們的案例中，它們能協助我們爬下一些網站，例如 104 人力銀行、Instagram、LINE 貼圖、維基百科「三國演義人物列表」、WineSearcher 酒類詢價網站和 YouTube 等。
 
+## Prerequisites
+1. You need to have some practical experiences as follows:
+  1.1 Javascript: Node.js programming language
+  1.2 jQuery: manipulate html elements
+  1.3 npm: nodejs package management
+  1.4 HTML 4/5 and relevant knowledge
+  1.5 CSS selector (**important!**)
+  1.6 Optional:
+    -- nvm: nodejs version management
+    -- MySql and SQL syntax
+
+2. Install node.js packages (It's related to package.json)
+```sh
+$ npm i --save
+```
+
 ## Examples
 1. Wikipedia page of roles list for Romance of Three Kingdoms (維基百科「三國人物演義列表」)
 2. WineSearch (WineSearcher酒類詢價網站)
