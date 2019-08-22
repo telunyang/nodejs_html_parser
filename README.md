@@ -21,6 +21,7 @@ You need to have some practical experiences as follows:
    - nvm: nodejs version management
    - MySql and SQL syntax
 
+
 安裝 Node.js 套件 (與 package.json 檔案有關)
 
 Install node.js packages (It's related to package.json)
