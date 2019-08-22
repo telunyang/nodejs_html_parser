@@ -9,7 +9,7 @@ This repository is to teach students who register my information classes on how 
 此專案用於指導報名資訊課程的學生如何爬取網站資料。在我們的案例中，它們能協助我們爬下一些網站，例如 104 人力銀行、Instagram、LINE 貼圖、維基百科「三國演義人物列表」、WineSearcher 酒類詢價網站和 YouTube 等。
 
 ## Prerequisites
-你需要一些下面所列出的實驗經驗:
+你需要一些下面所列出的實務經驗:
 
 You need to have some practical experiences as follows:
 1. Javascript: Node.js programming language
