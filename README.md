@@ -136,6 +136,6 @@ Instagram
 [![Instagram](https://i.ytimg.com/vi/wILsmJz25d4/hqdefault.jpg)](https://youtu.be/wILsmJz25d4 "Instagram")
 
 # Notice
-You need to import all files from **sql** folder to your databases so that you can run our code smoothly, otherwise, you would get some error messages.
+You need to import all files from **sql** folder to your databases so that you can run our code smoothly, otherwise, you will get some error messages.
 
-你需要從 sql 資料夾中，匯入所有的 sql 檔案到你的資料庫，方便你順利地執行程式碼，否則，你可能會得到一些錯誤訊息。
+你需要從 sql 資料夾中，匯入所有的 sql 檔案到你的資料庫，方便你順利地執行程式碼，否則，你將會得到一些錯誤訊息。
