@@ -16,8 +16,8 @@ You need to have some practical experiences as follows:
 4. HTML 4/5 and relevant knowledge
 5. CSS selector (**important!**)
 6. Optional:
-  -- nvm: nodejs version management
-  -- MySql and SQL syntax
+   - nvm: nodejs version management
+   - MySql and SQL syntax
 
 Install node.js packages (It's related to package.json)
 ```sh
