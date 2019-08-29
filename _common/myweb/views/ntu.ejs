@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <title><%= title %></title>
+</head>
+
+<body>
+    <h1><%= msg %></h1>
+
+    <table class="table table-striped table-bordered">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">流水號</th>
+                <th scope="col">關鍵字</th>
+                <th scope="col">職稱</th>
+                <th scope="col">職稱連結</th>
+                <th scope="col">地點</th>
+                <th scope="col">公司名稱</th>
+                <th scope="col">公司連結</th>
+                <th scope="col">種類</th>
+                <th scope="col">新增時間</th>
+                <th scope="col">更新時間</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% for(let i = 0; i < data.length; i++) { %>
+            <tr class="text-break">
+                <th scope="row"><%= data[i].sn %></th>
+                <td data-sn="<%= data[i].sn %>" data-field="keyword"><%= data[i].keyword %></td>
+                <td data-sn="<%= data[i].sn %>" data-field="position"><%= data[i].position %></td>
+                <td><%= data[i].positionLink %></td>
+                <td data-sn="<%= data[i].sn %>" data-field="location"><%= data[i].location %></td>
+                <td data-sn="<%= data[i].sn %>" data-field="companyName"><%= data[i].companyName %></td>
+                <td><%= data[i].companyLink %></td>
+                <td data-sn="<%= data[i].sn %>" data-field="category"><%= data[i].category %></td>
+                <td><%= data[i].created_at %></td>
+                <td><%= data[i].updated_at %></td>
+            </tr>
+            <% } %>
+        </tbody>
+    </table>
+
+    <!-- jQuery，但要從 google api 來取得 CDN -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    
+    <!-- 保留 bootstrap 官網提供的其它函式件 CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+    <!-- 自訂 js 功能 -->
+    <script>
+        $(document).ready(function(){
+            //雙擊表格特定的小格子
+            $(document).on('dblclick', 'table > tbody > tr > td', function(){
+                //將 td jQuery 物件賦予變數，方式程式內全域操作
+                let td = $(this); 
+
+                //欄位、原始文字、流水號變數初始化
+                let field = '';
+                let text = '';
+                let sn = '';
+
+                //若 td 有 data-sn 與 data-field 屬性，代表可編輯，於是提供「文字」變成「文字欄位」的功能
+                if( td.attr('data-sn') !== undefined && td.attr('data-field') !== undefined ){
+                    //將屬性值帶到變數當中
+                    field = td.attr('data-field');
+                    text = td.text();
+                    sn = td.attr('data-sn');
+                    
+                    //將 td 內容，從純文字，變成帶有值的文字欄位，同時新增相同屬性，至文字欄位的 html 元素當中
+                    td.html(`<input type="text" class="input-group" name="txt[]" data-sn="${sn}" data-field="${field}" value="${text}" />`);
+                }
+            });
+
+            //焦點離開編輯的文字欄位
+            $(document).on('blur', 'table > tbody > tr > td > input[type="text"][name="txt[]"]', function(){
+                //將 input jQuery 物件賦予變數，方式程式內全域操作
+                let input = $(this);
+
+                //將屬性值帶到變數當中
+                let sn = input.attr('data-sn');
+                let field = input.attr('data-field');
+                let value = input.val();
+                
+                //透過 input 元素尋找父元素 td，透過比對屬性值來加以指定
+                let td = input.parent('td[data-sn="' + sn + '"][data-field="' + field + '"]');
+
+                /**
+                 * 透過 Fetch API 來傳遞資料
+                 * Ref. https://developer.mozilla.org/zh-TW/docs/Web/API/Fetch_API/Using_Fetch
+                 * Ref. https://wcc723.github.io/javascript/2017/12/28/javascript-fetch/
+                 */
+                fetch('/ntu/update', {
+                    method: 'POST', //RESTful 方法
+                    headers: { //設定標頭: 指明使用者代理為桌面瀏覽器，同時指明傳給後端伺服器的是 json
+                        'user-agent': 'Mozilla/4.0 MDN Example',
+                        'content-type': 'application/json'
+                    },
+                    body: JSON.stringify({ //傳遞的資料，需要先設定成物件({…})，再轉成透過 JSON.stringify() 將物件字串化，才能正確執行
+                        sn: sn,
+                        field: field,
+                        value: value
+                    })
+                })
+                .then(function(res) {
+                    /** 
+                     * 使用 fetch，會以 ES6 的 Promise 來回應 (res, 即是 response)，
+                     * 回應的值為 ReadableStream 的實體，我們需要使用 json 的方法，
+                     * 去取得 json 格式的資料，然而依照 Fetch API 的格式，需要再次 
+                     * return 到下一個 .then() 去接收，此時 .then() 裡面的回呼值，
+                     * 就會變成帶有實際 json 內容物件，而非 ReadableStream 物件。
+                     */
+                    return res.json();
+                })
+                .then((json) => {
+                    if( parseInt(json.affectedRows) === 1 && parseInt(json.changedRows) === 1 ){
+                        // alert('更新成功!!');
+                        td.html(value);
+                    } else if( parseInt(json.affectedRows) === 1 && parseInt(json.changedRows) === 0 ) {
+                        alert('修改資料與原先資料一致，不執行更新');
+                        td.html(value);
+                    } else {
+                        alert('更新失敗…');
+                    }
+                })
+                .catch(function(err){
+                    alert(err);
+                });
+                
+            });
+        });
+    </script>
+</body>
+
+</html>
