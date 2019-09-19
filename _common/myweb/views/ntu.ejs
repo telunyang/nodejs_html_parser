@@ -73,6 +73,7 @@
                     //將屬性值帶到變數當中
                     field = td.attr('data-field');
                     text = td.text();
+                    text = text.trim(); //去除字串左右側的空白
                     sn = td.attr('data-sn');
                     
                     //將 td 內容，從純文字，變成帶有值的文字欄位，同時新增相同屬性，至文字欄位的 html 元素當中
@@ -89,6 +90,7 @@
                 let sn = input.attr('data-sn');
                 let field = input.attr('data-field');
                 let value = input.val();
+                value = value.trim(); //去除字串左右側的空白
                 
                 //透過 input 元素尋找父元素 td，透過比對屬性值來加以指定
                 let td = input.parent('td[data-sn="' + sn + '"][data-field="' + field + '"]');
@@ -121,6 +123,19 @@
                     return res.json();
                 })
                 .then((json) => {
+                    /**
+                     * 更新後，從後端回傳的 json 結構範例
+                     * OkPacket {
+                     *     fieldCount: 0,
+                     *     affectedRows: 1,
+                     *     insertId: 0,
+                     *     serverStatus: 2,
+                     *     warningCount: 0,
+                     *     message: '(Rows matched: 1  Changed: 1  Warnings: 0',
+                     *     protocol41: true,
+                     *     changedRows: 1 
+                     * }
+                     */
                     if( parseInt(json.affectedRows) === 1 && parseInt(json.changedRows) === 1 ){
                         // alert('更新成功!!');
                         td.html(value);
