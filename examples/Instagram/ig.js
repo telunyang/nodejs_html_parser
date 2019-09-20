@@ -49,9 +49,8 @@ const $ = require('jquery')(window);
 
 //走訪網址
 // const strUrl = 'https://www.instagram.com/mochi_dad';
-// const strUrl = 'https://www.instagram.com/ntnu.taiwan';
-const strUrl = 'https://www.instagram.com/mannerproduction';
-// const strUrl = 'https://www.instagram.com/mu_chun_shen';
+const strUrl = 'https://www.instagram.com/ntnu.taiwan';
+// const strUrl = 'https://www.instagram.com/mannerproduction';
 
 //放置主要資訊的全域變數 (陣列)
 var arrLink = {}; //在這裡宣告成物件，是因為本案例索引不是數值，而是字串
@@ -79,9 +78,10 @@ async function init(){
 
     await nightmare
     .goto(strUrl, headers)
-    .wait('button._0mzm-.sqdOP.L3NKy')
+    // .wait('button._0mzm-.sqdOP.L3NKy')
+    .wait('span.PJXu4')
     .catch(error => {
-        console.error(' failed: ', error)
+        console.error('Initialization failed: ', error)
     });
 }
 
@@ -150,7 +150,7 @@ async function parse(){
             strSrcSet = $(element).find('img.FFVAD').attr('srcset');
 
             //取得連結樣式
-            pattern = /(https:\/\/[a-zA-Z0-9_./-]+.jpg\?[a-zA-Z0-9_=.-]+)\s(\d{3,4}w)/gm;
+            pattern = /(https:\/\/[a-zA-Z0-9-./_?=&]+)\s(\d{3,4}w)/gm;
             
             //pattern.exec 會回傳一個結果「陣列」或是空值；若是有比對到資料，則透過迴圈整理、加入新資料
             while( (arrMatch = pattern.exec(strSrcSet)) !== null ){
@@ -198,7 +198,8 @@ async function visit(){
         //到各個影音連結的詳細頁面，並取得 html
         html = await nightmare
         .goto(arrLink[key].link, headers)
-        .wait('button._0mzm-.sqdOP.yWX7d') //等待主要元素出現
+        // .wait('button._0mzm-.sqdOP.yWX7d') //等待主要元素出現
+        .wait('a.FPmhX.notranslate.nJAzx')
         .evaluate(() => {
             return document.documentElement.innerHTML;
         });
@@ -221,7 +222,7 @@ async function visit(){
                     //等個數秒，按下 slider button，然後再重抓一次 html
                     html = await nightmare
                     .wait('button._6CZji') //等待滑動圖片的右鍵出現
-                    .wait(2000) //等待數秒
+                    .wait(1000) //等待數秒
                     .click('button._6CZji') //按下滑動圖片的右鍵
                     .evaluate(() => {
                         return document.documentElement.innerHTML; //回傳當前的 html
@@ -255,8 +256,7 @@ async function visit(){
                 linkOfVideo = $(html).find('video.tWeCl').attr('src');
 
                 //影片預設封面
-                // linkOfVideoCoverImg = $(html).find('img._8jZFn').attr('src'); 
-                linkOfVideoCoverImg = $(html).find('video.tWeCl').attr('poster');
+                linkOfVideoCoverImg = $(html).find('img._8jZFn').attr('src');
             }
         } else if($(html).find('img.FFVAD').length > 0){ //檢查圖片
             if( $(html).find('div.tN4sQ.zRsZI ul.YlNGR li._-1_m6').length > 0) { //檢查是否有「多張」圖片，但可能有不同大小的尺寸
@@ -274,7 +274,7 @@ async function visit(){
                     //等個數秒，按下 slider button，然後再重抓一次 html
                     html = await nightmare
                     .wait('button._6CZji') //等待滑動圖片的右鍵出現
-                    .wait(2000) //等待數秒
+                    .wait(1000) //等待數秒
                     .click('button._6CZji') //按下滑動圖片的右鍵
                     .evaluate(() => {
                         return document.documentElement.innerHTML; //回傳當前的 html
@@ -284,7 +284,7 @@ async function visit(){
                     console.log('Sliding image: ' + i);
 
                     //圖片連結樣式
-                    pattern = /(https:\/\/[a-zA-Z0-9_./-]+.jpg\?[a-zA-Z0-9_=.-]+)\s(\d{3,4}w)/gm;
+                    pattern = /(https:\/\/[a-zA-Z0-9-./_?=&]+)\s(\d{3,4}w)/gm;
 
                     $(html).find('div.tN4sQ.zRsZI ul.YlNGR li._-1_m6 img.FFVAD').each((index, element) => {
                         //圖片連結的字串
@@ -311,7 +311,7 @@ async function visit(){
                 strSrcSet = $(html).find('div.eLAPa._23QFA div.KL4Bh img.FFVAD').attr('srcset');
 
                 //連結樣式
-                pattern = /(https:\/\/[a-zA-Z0-9_./-]+.jpg\?[a-zA-Z0-9_=.-]+)\s(\d{3,4}w)/gm;
+                pattern = /(https:\/\/[a-zA-Z0-9-./_?=&]+)\s(\d{3,4}w)/gm;
                 
                 //pattern.exec 會回傳一個結果「陣列」或是空值；若是有比對到資料，則透過迴圈整理、加入新資料
                 while( (arrMatch = pattern.exec(strSrcSet)) !== null ){
@@ -354,12 +354,12 @@ async function write(){
     //建立資料夾
     await fs.mkdir('output', {recursive: true}, async (err) => {
         if(err) throw err;
+    });
 
-        //將物件轉成 json 格存，儲存檔案
-        await fs.writeFile('output/ig.json', JSON.stringify(arrLink, null, 2), function(err) {
-            if(err) throw err;
-            console.log('Saved.');
-        });
+    //將物件轉成 json 格存，儲存檔案
+    await fs.writeFile('output/ig.json', JSON.stringify(arrLink, null, 2), function(err) {
+        if(err) throw err;
+        console.log('ig.json has been saved.');
     });
 }
 
@@ -368,7 +368,7 @@ async function close() {
     //關閉瀏覽器
     await nightmare.end((err) => {
         if(err) throw err;
-        console.log('Nightmare is close.');
+        console.log('Nightmare connection is close.');
     });
 }
 
@@ -389,15 +389,15 @@ async function store(){
                 //單張圖片
                 case 'image': 
                     for(let i = 0; i < obj[key].thumbnails.length; i++){
-                        await exec('curl -o "files/ig/' + key + '/thumbnails_' + key + '_' + obj[key].thumbnails[i].size + '.jpg" ' + obj[key].thumbnails[i].img).then((res) => {
-                            console.log('檔案 thumbnails_' + key + '_' + obj[key].thumbnails[i].size + '.jpg 下載完成');
+                        await exec('curl -o "files/ig/' + key + '/image_thumbnails_' + key + '_' + obj[key].thumbnails[i].size + '.jpg" ' + '"' + obj[key].thumbnails[i].img + '"').then((res) => {
+                            console.log('檔案 image_thumbnails_' + key + '_' + obj[key].thumbnails[i].size + '.jpg 下載完成');
                         });
                     }
                 break;
 
                 //影片
                 case 'video':
-                    await exec('curl -o "files/ig/' + key + '/' + key + '.mp4" ' + obj[key].videoLink).then((res) => {
+                    await exec('curl -o "files/ig/' + key + '/' + key + '.mp4" ' + '"' + obj[key].videoLink + '"').then((res) => {
                         console.log('檔案 ' + key + '.mp4 下載完成');
                     });
                 break;
@@ -406,7 +406,7 @@ async function store(){
                 case 'images':
                     for(let k in obj[key].arrImg){
                         for(let size in obj[key].arrImg[k]){
-                            await exec('curl -o "files/ig/' + key + '/images_' + k + '_' + size + '.jpg" ' + obj[key].arrImg[k][size]).then((res) => {
+                            await exec('curl -o "files/ig/' + key + '/images_' + k + '_' + size + '.jpg" ' + '"' + obj[key].arrImg[k][size] + '"').then((res) => {
                                 console.log('檔案 images_' + k + '_' + size + '.jpg 下載完成');
                             });
                         }
@@ -416,7 +416,7 @@ async function store(){
                 //多個影片
                 case 'videos':
                     for(let k in obj[key].arrVideo){
-                        await exec('curl -o "files/ig/' + key + '/videos_' + k + '.mp4" ' + obj[key].arrVideo[k]).then((res) => {
+                        await exec('curl -o "files/ig/' + key + '/videos_' + k + '.mp4" ' + '"' + obj[key].arrVideo[k] + '"').then((res) => {
                             console.log('檔案 videos_' + k + '.mp4 下載完成');
                         });
                     }
@@ -428,8 +428,13 @@ async function store(){
 
 //主程式區域
 try {
-    asyncArray([init, scroll, visit, write, close]).then(async () => {
-    // asyncArray([store]).then(async () => {
+    asyncArray([
+        init, 
+        scroll, 
+        visit, 
+        write,
+        store, 
+        close]).then(async () => {
         console.log('Done');     
     });
 } catch (err) {
