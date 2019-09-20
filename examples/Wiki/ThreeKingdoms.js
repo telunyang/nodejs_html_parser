@@ -148,12 +148,12 @@ try {
 
         //將物件轉成 json 格存，儲存檔案
         await writeFile('output/wiki.json', JSON.stringify(arrLink, null, 2));
-    });
 
-    //儲存三國人物 json 資料到資料庫
-    // save();
+        //儲存三國人物 json 資料到資料庫
+        // await save();
 
-    
+        console.log(`維基百科「三國演義人物列表」儲存完畢`);
+    });    
 } catch(err) {
     console.error(err);
 }
