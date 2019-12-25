@@ -21,7 +21,7 @@ const { window } = new JSDOM();
 const $ = require('jquery')(window);
 
 //關鍵字
-let strKeyword = '清潔工';
+let strKeyword = '國小老師';
 
 //放置影音重要資訊的全域變數 (陣列)
 var arrLink = [];
@@ -32,16 +32,6 @@ const headers = {
     'Accept':'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3',
     'Accept-Language': 'zh-TW,zh;q=0.9,en-US;q=0.8,en;q=0.7',
 };
-
-//讓程式休息一下，作為瀏覽器執行下一個動作前的緩衝
-async function pause(seconds) {
-    console.log('Take a break...');
-    return new Promise(function (resolve, reject) {
-        setTimeout(function () {
-            resolve("Go!");
-        }, seconds * 1000 ); //這裡的參數為毫秒，所以需要乘上 1000
-    });
-}
 
 //進行檢索
 async function searchKeyword(){
@@ -81,20 +71,18 @@ async function setJobType(){
 async function scrollPage(){
     console.log('Ready to scroll...');
 
-    let previousHeight = 0; //先前偏移的高度
     let currentHeight = 0; //目前的高度
     let offset = 0; //總偏移量
 
     //不斷地 scroll down，直到沒有辦法再往下捲動
     while(offset <= currentHeight) {
-        previousHeight = offset;
         currentHeight = await nightmare.evaluate(() => {
             return document.documentElement.scrollHeight;
         });
         offset += 500;
         await nightmare.scrollTo( offset, 0 ).wait(500);
         
-        console.log('previousHeight = ' + previousHeight + ', currentHeight = ' + currentHeight + ', offset = ' + offset);
+        console.log('currentHeight = ' + currentHeight + ', offset = ' + offset);
         
         // if(offset > 500) break; //強迫跳出迴圈，視情況使用
         
