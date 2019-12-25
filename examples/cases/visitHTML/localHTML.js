@@ -87,13 +87,13 @@ let html = `<!DOCTYPE html>
 /**
  * jsdom + jquery 第一種作法
  */
-// const jsdom = require("jsdom");
-// const { JSDOM } = jsdom;
-// const { window } = new JSDOM();
-// const $ = require('jquery')(window);
-// console.log( $(html).find('nav.nav.nav-info ul.nav-body li.nav-list:eq(0) a.center.link-custom').text() );
-// console.log( $(html).find('aside.menu ul.menu-body li.menu-list:eq(2) a.center').text() );
-// console.log( $(html).find('footer.footer p').text() );
+const jsdom = require("jsdom");
+const { JSDOM } = jsdom;
+const { window } = new JSDOM();
+const $ = require('jquery')(window);
+console.log( $(html).find('nav.nav.nav-info ul.nav-body li.nav-list:eq(0) a.center.link-custom').text() );
+console.log( $(html).find('aside.menu ul.menu-body li.menu-list:eq(2) a.center').text() );
+console.log( $(html).find('footer.footer p').text() );
 
 /**
  * jsdom + jquery 第二種作法 (實體化時，參數放置了 html 原始文字資料)
