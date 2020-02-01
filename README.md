@@ -30,12 +30,17 @@ $ npm i --save
 ```
 
 ## Examples
+### Nightmare.js
 1. Wikipedia page of roles list for Romance of Three Kingdoms (維基百科「三國人物演義列表」)
 2. WineSearch (WineSearcher酒類詢價網站)
 3. LINE stickers (LINE官方貼圖)
 4. 104 Human Resource bank (104人力銀行)
 5. YouTube
 6. Instagram
+### Selenium
+1. ebooks
+ - jingyong [金庸](https://www.bookwormzz.com/zh/ "金庸")
+ - gutenberg [古騰堡計畫](https://www.gutenberg.org/browse/languages/zh "古騰堡計畫")
 
 ## New a customized database configuration file
 You can add a new file of database configuration in **sql** folder as the following setting:
