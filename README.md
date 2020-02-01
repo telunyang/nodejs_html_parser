@@ -1,7 +1,7 @@
 # Nodejs-Html-Parser
 Using nightmareJS or selenium driver to crawl data from websites.
 
-使用 nightmareJS selenium driver 來爬取網站資料。
+使用 nightmareJS or selenium web driver 來爬取網站資料。
 
 ## Description
 This repository is to teach students who register my information classes on how to crawl and retrieve text/hyperlink/binary data from websites. In our cases, they can help us to crawl some websites such as 104 Human Resource bank, Instagram, LINE stickers, Wikipedia page of roles list for Romance of Three Kingdoms, WineSearcher and YouTube, etc.
@@ -28,6 +28,12 @@ Install node.js packages (It's related to package.json)
 ```sh
 $ npm i --save
 ```
+
+下載 ChromeDriver - WebDriver for Chrome
+
+[Downloads](https://chromedriver.chromium.org/downloads "Downloads")
+
+備註: 請比對自己電腦中所使用的 Chrome 版本
 
 ## Examples
 ### Nightmare.js
