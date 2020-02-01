@@ -1,12 +1,12 @@
 const fs = require('fs');
 
 //讀取 tmp.log 的檔案內容
-fs.readFile("tmp.log", function(err, contents){
+fs.readFile("tmp.txt", function(err, contents){
     if(err){
         throw err;
     }
 
-    console.log(`讀取 tmp.log 成功`);
+    console.log(`讀取 tmp.txt 成功`);
 
     //若是讀取沒問題，則加上新增的文字，然後寫入 cb1.txt 檔案
     fs.writeFile("cb1.txt", contents + ' cb1', function(err){

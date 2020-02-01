@@ -1,14 +1,14 @@
 const fs = require('fs');
 
 new Promise(function(resolve, reject){
-    fs.readFile("tmp.log", function(err, contents){
+    fs.readFile("tmp.txt", function(err, contents){
         if(err) {
             //讀取錯誤就回傳錯誤的物件到 .catch() 中
             reject(err);
             return;
         };
 
-        fs.writeFile("tmp1.log", `${contents} I'm ironman!!`, function(err){
+        fs.writeFile("tmp1.txt", `${contents} I'm ironman!!`, function(err){
             if(err){
                 throw err;
             }
@@ -18,7 +18,7 @@ new Promise(function(resolve, reject){
 }).then((tmpNum) => {
     console.log(`Write to ${tmpNum} ok`);
     let p2 = new Promise(function(resolve, reject){
-        fs.readFile("tmp1.log", function(err, contents){
+        fs.readFile("tmp1.txt", function(err, contents){
             if(err) {
                 //讀取錯誤就回傳錯誤的物件到 .catch() 中
                 reject(err);
@@ -26,7 +26,7 @@ new Promise(function(resolve, reject){
             };
     
             //成功就往 .then() 傳遞
-            fs.writeFile("tmp2.log", `${contents} I'm spiderman!!`, function(err){
+            fs.writeFile("tmp2.txt", `${contents} I'm spiderman!!`, function(err){
                 if(err){
                     throw err;
                 }
@@ -38,7 +38,7 @@ new Promise(function(resolve, reject){
 }).then((tmpNum) => {
     console.log(`Write to ${tmpNum} ok`);
     let p3 = new Promise(function(resolve, reject){
-        fs.readFile("tmp2.log", function(err, contents){
+        fs.readFile("tmp2.txt", function(err, contents){
             if(err) {
                 //讀取錯誤就回傳錯誤的物件到 .catch() 中
                 reject(err);
@@ -46,7 +46,7 @@ new Promise(function(resolve, reject){
             };
     
             //成功就往 .then() 傳遞
-            fs.writeFile("tmp3.log", `${contents} I'm superman!!`, function(err){
+            fs.writeFile("tmp3.txt", `${contents} I'm superman!!`, function(err){
                 if(err){
                     throw err;
                 }
@@ -58,7 +58,7 @@ new Promise(function(resolve, reject){
 }).then((tmpNum) => {
     console.log(`Write to ${tmpNum} ok`);
     let p4 = new Promise(function(resolve, reject){
-        fs.readFile("tmp3.log", function(err, contents){
+        fs.readFile("tmp3.txt", function(err, contents){
             if(err) {
                 //讀取錯誤就回傳錯誤的物件到 .catch() 中
                 reject(err);
@@ -66,7 +66,7 @@ new Promise(function(resolve, reject){
             };
     
             //成功就往 .then() 傳遞
-            fs.writeFile("tmp4.log", `${contents} I'm batman!!`, function(err){
+            fs.writeFile("tmp4.txt", `${contents} I'm batman!!`, function(err){
                 if(err){
                     throw err;
                 }

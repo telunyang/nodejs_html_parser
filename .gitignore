@@ -62,4 +62,4 @@ typings/
 
 # customized files
 node_modules
-package-lock.json
+selenium/Journal

@@ -1,7 +1,7 @@
 const fs = require('fs');
 
 let p = new Promise(function(resolve, reject){
-    fs.readFile("tmp.log", function(err, contents){
+    fs.readFile("tmp.txt", function(err, contents){
         if(err) {
             //讀取錯誤就回傳錯誤的物件到 .catch() 中
             reject(err);
@@ -14,7 +14,7 @@ let p = new Promise(function(resolve, reject){
 });
 
 p.then(function(contents){
-    fs.writeFile("promise01.log", `${contents} I'm ironman!!`, function(err){
+    fs.writeFile("promise_tmp.txt", `${contents} I'm ironman!!`, function(err){
         if(err){
             throw err;
         }
